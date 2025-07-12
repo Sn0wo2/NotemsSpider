@@ -15,18 +15,18 @@ def process_code(code, stage, length=0, index=0, retry=False):
     success, failed_code = fetch_and_extract(code)
 
     progress = load_progress()
-    progress['stage'] = stage
-    if stage == 'dict':
-        progress['dict_index'] = index + 1
+    progress["stage"] = stage
+    if stage == "dict":
+        progress["dict_index"] = index + 1
     else:
-        progress['brute_len'] = length
-        progress['brute_index'] = index + 1
+        progress["brute_len"] = length
+        progress["brute_index"] = index + 1
     save_progress(progress)
 
     if (not success or failed_code) and (not retry):
         save_retry(code)
     if (success and not failed_code) and retry:
-        logger.info(f'delete retry: {code}')
+        logger.info(f"delete retry: {code}")
         delete_retry(code)
 
     time.sleep(random.uniform(*DELAY_RANGE))
@@ -37,22 +37,22 @@ def run():
     init_retry()
 
     progress = load_progress()
-    dict_index = progress.get('dict_index', 0)
-    brute_len = progress.get('brute_len', MIN_LEN)
-    brute_index = progress.get('brute_index', 0)
+    dict_index = progress.get("dict_index", 0)
+    brute_len = progress.get("brute_len", MIN_LEN)
+    brute_index = progress.get("brute_index", 0)
 
-    if progress['stage'] == 'dict':
+    if progress["stage"] == "dict":
         dictionary = load_dictionary()
         while dict_index < len(dictionary):
             retry_queue = [item.code for item in load_retry()]
             if retry_queue:
-                process_code(retry_queue[0], 'dict', retry=True)
+                process_code(retry_queue[0], "dict", retry=True)
                 continue
             code = dictionary[dict_index]
-            process_code(code, 'dict', index=dict_index)
+            process_code(code, "dict", index=dict_index)
             dict_index += 1
 
-        progress.update({'stage': 'brute', 'brute_len': MIN_LEN, 'brute_index': 0})
+        progress.update({"stage": "brute", "brute_len": MIN_LEN, "brute_index": 0})
         save_progress(progress)
         brute_len = MIN_LEN
         brute_index = 0
@@ -63,14 +63,14 @@ def run():
         while index < total_combinations(length):
             retry_queue = [item.code for item in load_retry()]
             if retry_queue:
-                process_code(retry_queue[0], 'brute', length=length, retry=True)
+                process_code(retry_queue[0], "brute", length=length, retry=True)
                 continue
             code = brute_code_at(index, length)
-            process_code(code, 'brute', length=length, index=index)
+            process_code(code, "brute", length=length, index=index)
             index += 1
 
         progress = load_progress()
-        progress.update({'brute_len': length + 1, 'brute_index': 0})
+        progress.update({"brute_len": length + 1, "brute_index": 0})
         save_progress(progress)
 
     logger.info("All done.")
