@@ -22,9 +22,7 @@ def fetch_and_extract(code):
     try:
         r = cffi_requests.get(
             url,
-            headers={
-                "User-Agent": UA
-            },
+            headers={"User-Agent": UA},
             impersonate=IMPERSONATE,
             timeout=10,
         )
