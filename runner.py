@@ -5,7 +5,13 @@ import time
 
 from config import DELAY_RANGE, MIN_LEN, MAX_LEN, MAX_RETRIES
 from fetcher import fetch_and_extract
-from progress import init_progress, load_progress, save_progress, show_progress, sync_progress
+from progress import (
+    init_progress,
+    load_progress,
+    save_progress,
+    show_progress,
+    sync_progress,
+)
 from retry import load_retry, init_retry, save_retry, delete_retry, increment_retry
 from utils import brute_code_at, total_combinations, load_dictionary_cached
 
@@ -13,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 def process_code(code, stage, length=0, index=0, retry_item=None):
-    if stage != 'retry':
+    if stage != "retry":
         progress = load_progress()
         progress["stage"] = stage
         if stage == "dict":
@@ -25,7 +31,7 @@ def process_code(code, stage, length=0, index=0, retry_item=None):
 
     success, failed_code = fetch_and_extract(code)
     if not success or failed_code:
-        if stage == 'retry':
+        if stage == "retry":
             retries = increment_retry(code)
             if retries is not None and retries >= MAX_RETRIES:
                 logger.info(f"Max retries reached for {code}, removing from queue.")
@@ -40,7 +46,7 @@ def process_code(code, stage, length=0, index=0, retry_item=None):
 
 
 def run():
-    if len(sys.argv) > 1 and sys.argv[1] == 'progress':
+    if len(sys.argv) > 1 and sys.argv[1] == "progress":
         show_progress()
         return
 
@@ -51,7 +57,9 @@ def run():
     while True:
         retry_queue = load_retry()
         if retry_queue:
-            logger.info(f"Processing {len(retry_queue)} items from the high-priority retry queue...")
+            logger.info(
+                f"Processing {len(retry_queue)} items from the high-priority retry queue..."
+            )
             for item in retry_queue:
                 process_code(item.code, "retry", retry_item=item)
             continue
@@ -69,7 +77,9 @@ def run():
                 continue
             else:
                 logger.info("Dictionary scan complete. Switching to brute-force mode.")
-                progress.update({"stage": "brute", "brute_len": MIN_LEN, "brute_index": 0})
+                progress.update(
+                    {"stage": "brute", "brute_len": MIN_LEN, "brute_index": 0}
+                )
                 save_progress(progress)
                 continue
 

@@ -3,7 +3,12 @@ import logging
 from config import MIN_LEN, MAX_LEN
 from db import get_read_session, get_write_session
 from db_model import Progress, Result
-from utils import load_dictionary_cached, total_brute_combinations, total_combinations, get_code_index
+from utils import (
+    load_dictionary_cached,
+    total_brute_combinations,
+    total_combinations,
+    get_code_index,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -82,21 +87,33 @@ def sync_progress():
         dictionary = load_dictionary_cached()
         code_info = get_code_index(last_result.code, dictionary, MIN_LEN)
         if not code_info:
-            logger.warning(f"Could not determine index for code '{last_result.code}'. Skipping sync.")
+            logger.warning(
+                f"Could not determine index for code '{last_result.code}'. Skipping sync."
+            )
             return
 
         res_stage, res_len, res_index = code_info
-        prog_stage = progress['stage']
+        prog_stage = progress["stage"]
 
         is_behind = (
-                (prog_stage == 'dict' and res_stage == 'brute') or
-                (prog_stage == 'dict' and res_stage == 'dict' and progress.get('dict_index', 0) <= res_index) or
-                (prog_stage == 'brute' and res_stage == 'brute' and
-                 (progress.get('brute_len', MIN_LEN), progress.get('brute_index', 0)) <= (res_len, res_index))
+            (prog_stage == "dict" and res_stage == "brute")
+            or (
+                prog_stage == "dict"
+                and res_stage == "dict"
+                and progress.get("dict_index", 0) <= res_index
+            )
+            or (
+                prog_stage == "brute"
+                and res_stage == "brute"
+                and (progress.get("brute_len", MIN_LEN), progress.get("brute_index", 0))
+                <= (res_len, res_index)
+            )
         )
 
         if is_behind:
-            logger.info(f"Progress is behind. Syncing based on last result code: {last_result.code}")
+            logger.info(
+                f"Progress is behind. Syncing based on last result code: {last_result.code}"
+            )
             new_progress_state = {"stage": res_stage}
             if res_stage == "dict":
                 new_progress_state["dict_index"] = res_index + 1

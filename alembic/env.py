@@ -33,7 +33,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
+    sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
     from db_model import Base
 
     url = config.get_main_option("sqlalchemy.url")
@@ -55,7 +55,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), '..')))
+    sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
     from db_model import Base
 
     connectable = engine_from_config(
@@ -65,9 +65,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=Base.metadata
-        )
+        context.configure(connection=connection, target_metadata=Base.metadata)
 
         with context.begin_transaction():
             context.run_migrations()
