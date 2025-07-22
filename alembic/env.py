@@ -11,6 +11,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+
 def run_migrations_offline() -> None:
     sys.path.insert(0, os.path.realpath(os.path.join(os.path.dirname(__file__), "..")))
     from db_model import Base
