@@ -1,4 +1,4 @@
-SQLAlchemy~=2.0.41
+SQLAlchemy~=2.0.42
 lxml~=6.0.0
 readerwriterlock~=1.0.9
 alembic~=1.16.4
