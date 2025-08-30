@@ -7,6 +7,7 @@
 [![CodeQL Advanced](https://github.com/Sn0wo2/NotemsSpider/actions/workflows/codeql.yml/badge.svg)](https://github.com/Sn0wo2/NotemsSpider/actions/workflows/codeql.yml)
 [![Dependabot Updates](https://github.com/Sn0wo2/NotemsSpider/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Sn0wo2/NotemsSpider/actions/workflows/dependabot/dependabot-updates)
 [![Automatic Dependency Submission](https://github.com/Sn0wo2/NotemsSpider/actions/workflows/dependency-graph/auto-submission/badge.svg)](https://github.com/Sn0wo2/NotemsSpider/actions/workflows/dependency-graph/auto-submission)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSn0wo2%2FNotemsSpider.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FSn0wo2%2FNotemsSpider?ref=badge_shield)
 
 ---
 
@@ -37,3 +38,6 @@ This script is intended for educational and research purposes only. Use responsi
 If you are the administrator of note.ms and wish this project to be taken down, please open an issue on the repository.
 如果您是 note.ms 的网站管理员并希望删除本项目，请在本仓库提交 Issue。
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FSn0wo2%2FNotemsSpider.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FSn0wo2%2FNotemsSpider?ref=badge_large)
