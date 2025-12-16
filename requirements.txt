@@ -2,4 +2,4 @@ SQLAlchemy~=2.0.42
 lxml~=6.0.0
 readerwriterlock~=1.0.9
 alembic~=1.16.4
-curl_cffi~=0.12.0
+curl_cffi~=0.14.0
